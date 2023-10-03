@@ -11,10 +11,10 @@ const address = require('./lib/address');
 
 const MAGENTO_API_VERSION = 'V1';
 
-module.exports.Magento1Client = function (options, req) {
+module.exports.Magento1Client = function (options, additional_headers) {
   let instance = {
     addMethods (key, module) {
-      let client = RestClient(options, req);
+      let client = RestClient(options, additional_headers);
       if (module) {
         if (this[key])
           this[key] = Object.assign(this[key], module(client));
@@ -26,7 +26,7 @@ module.exports.Magento1Client = function (options, req) {
 
   options.version = MAGENTO_API_VERSION;
 
-  let client = RestClient(options, req);
+  let client = RestClient(options, additional_headers);
 
   instance.user = user(client);
   instance.cart = cart(client);
